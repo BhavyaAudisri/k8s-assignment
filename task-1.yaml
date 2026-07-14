@@ -1,5 +1,5 @@
+apiVersion: apps/v1
 kind: ReplicaSet
-apiVersion: v1
 metadata:
   name: payment-processor
 spec:
@@ -11,15 +11,15 @@ spec:
     metadata:
       labels:
         app: nginx
-spec:
-  containers:
-  - name: nginx
-    image: nginx
-    ports:
-    - containerPort: 80
+    spec:
+      tolerations:
+      - key: "security"
+        operator: "Equal"
+        value: "high"
+        effect: "NoSchedule"
 
-  tolerations:
-  - key: "security"
-    operator: "Equal"
-    value: "high"
-    effect: "NoSchedule"
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
