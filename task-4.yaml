@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: log-cleaner
+spec:
+  schedule: "0 2 * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchLabels:
+                    app: redis-backend
+                topologyKey: kubernetes.io/hostname
+          containers:
+          - name: cronjob
+            image: alpine
+            command:
+            - sh
+            - -c
+            - echo "CronJob ran at: $(date)"
+          restartPolicy: OnFailure
+
