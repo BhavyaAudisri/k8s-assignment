@@ -26,14 +26,15 @@ spec:
     metadata:
       labels:
         app: web-frontend
-  affinity:
-    podAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-      - labelSelector:
-          matchLabels:
-             app: redis-backend
-        topologyKey: kubernetes.io/zone
     spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app: redis-backend
+            topologyKey: kubernetes.io/zone
+    
       containers:
       - name: nginx
         image: nginx:latest
