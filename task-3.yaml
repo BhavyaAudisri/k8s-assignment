@@ -26,17 +26,17 @@ spec:
     metadata:
       labels:
         app: web-frontend
-  affinity:
-    affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - redis-backend
-            topologyKey: kubernetes.io/hostname
+    spec:
+      affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - redis-backend
+              topologyKey: kubernetes.io/hostname
     spec:
       containers:
       - name: nginx
