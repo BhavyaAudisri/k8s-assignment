@@ -18,11 +18,8 @@ spec:
                     app: redis-backend
                 topologyKey: kubernetes.io/hostname
           containers:
-          - name: cronjob
+          - name: reporter
             image: alpine
-            command:
-            - sh
-            - -c
-            - echo "CronJob ran at: $(date)"
+            command: ["sh", "-c", "echo CronJob ran at: $(date)"]
           restartPolicy: OnFailure
 
